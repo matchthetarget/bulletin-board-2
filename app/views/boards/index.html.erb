@@ -10,23 +10,30 @@
 
 <div>
   <div>
+
     <h2>
       Add a new board
     </h2>
+    <% if current_user.present? %>
+      <form action="/insert_board" method="post">
+        <div>
+          <label for="name_box">
+            Name
+          </label>
 
-    <form action="/insert_board" method="post">
-      <div>
-        <label for="name_box">
-          Name
-        </label>
+          <input type="text" id="name_box" name="query_name">
+        </div>
 
-        <input type="text" id="name_box" name="query_name">
-      </div>
+        <input type="hidden" name="query_user_id" value="<%= current_user.id %>">
 
-      <button>
-        Add board
-      </button>
-    </form>
+        <button>
+          Add board
+        </button>
+      </form>
+    <% else %>
+      <p>Must be <a href="/users/sign_in">signed in</a> to add a new board.</p>
+    <% end %>
+
   </div>
 </div>
 
@@ -35,9 +42,18 @@
 <ul>
   <% @list_of_boards.each do |a_board| %>
     <li>
-      <a href="/boards/<%= a_board.id %>">
-        <%= a_board.name %>
-      </a>
+      <div>
+        <a href="/boards/<%= a_board.id %>">
+          <%= a_board.name %>
+        </a>
+      </div>
+
+      <div>
+        <% owner = User.where({ :id => a_board.user_id }).at(0) %>
+        Owner: <%= owner.email %>
+      </div>
+
+      <hr>
     </li>
   <% end %>
 </ul>
