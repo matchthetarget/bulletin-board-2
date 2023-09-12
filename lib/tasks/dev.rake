@@ -1,11 +1,10 @@
 desc "Fill the database tables with some sample data"
 task({ :sample_data => :environment }) do
   puts "Sample data task running"
-  if Rails.env.development?
-    User.destroy_all
-    Board.destroy_all
-    Post.destroy_all
-  end
+
+  User.destroy_all
+  Board.destroy_all
+  Post.destroy_all
 
   if Rails.env.production?
     ActiveRecord::Base.connection.tables.each do |t|
