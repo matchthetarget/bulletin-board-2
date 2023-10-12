@@ -12,9 +12,9 @@ task({ :sample_data => :environment }) do
   Post.delete_all
   User.delete_all
 
-  users = ["alice", "bob", "carol", "dave", "eve"]
-
-  users.each do |username|
+  usernames = ["alice", "bob", "carol", "dave", "eve"]
+  users = []
+  usernames.each do |username|
     user = User.new
     user.email = "#{username}@example.com"
     user.password = "password"
